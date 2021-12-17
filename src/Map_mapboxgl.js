@@ -71,7 +71,7 @@ function Map() {
             },
           });
 
-       
+
 
           // Add All Brakes GeoJSON source with multiple points
           map.addSource("brakespoints", {
@@ -98,8 +98,8 @@ function Map() {
               "text-anchor": "top",
             },
           });
-           // Add a Engines GeoJSON source with multiple points
-           map.addSource("enginepoints", {
+          // Add a Engines GeoJSON source with multiple points
+          map.addSource("enginepoints", {
             type: "geojson",
             data: "https://chadzilla2080.github.io/mapdata/Engine.geojson",
             buffer: 0,
@@ -138,17 +138,25 @@ function Map() {
 
     ];
 
+    var selectDropDown = document.createElement("select");
+    // link.href = "#";
+    // selectDropDown.className = "active";
+    selectDropDown.id = "mySelect";
+    selectDropDown.textContent = "Please select city.";
+    
     // set up the corresponding toggle button for each layer
     for (var i = 0; i < toggleableLayerIds.length; i++) {
       var id = toggleableLayerIds[i];
+      //Create and append the options
+      var option = document.createElement("option");
+      option.value = toggleableLayerIds[i];
+      option.text = toggleableLayerIds[i];
+      selectDropDown.appendChild(option);
 
-      var link = document.createElement("a");
-      link.href = "#";
-      link.className = "active";
-      link.textContent = id;
-
-      link.onclick = function (e) {
-        var clickedLayer = this.textContent;
+      selectDropDown.onchange = function (e) {
+        // console.log(e.options[e.selectedIndex].text);
+        console.log(e.value);
+        var clickedLayer = this.value;
         e.preventDefault();
         e.stopPropagation();
 
@@ -165,7 +173,7 @@ function Map() {
       };
 
       var layers = document.getElementById("menu");
-      layers.appendChild(link);
+      layers.appendChild(selectDropDown);
       <>
         <input
           type="text"
@@ -175,6 +183,7 @@ function Map() {
           }}
         />
         <br />
+
         {toggleableLayerIds
           .filter((val) => {
             if (buttonTerm === "") {
@@ -189,7 +198,7 @@ function Map() {
           .map((val, key) => {
             return (
               <div>
-                <a href="">{val}</a>
+                <a href="" key={key}>{val}</a>
                 <br />
               </div>
             );
@@ -203,7 +212,7 @@ function Map() {
     map.on("click", "Auto Body", (e) => {
       map.getCanvas().style.cursor = "pointer";
 
-    //   // Copy coordinates array.
+      //   // Copy coordinates array.
       const coordinates = e.features[0].geometry.coordinates.slice();
       const partmake = e.features[0].properties.partmake;
       const partmodel = e.features[0].properties.partmodel;
@@ -225,29 +234,29 @@ function Map() {
         .setLngLat(coordinates)
         .setHTML(
           "<h3>" +
-            partmake +
-            " " +
-            partmodel +
-            " " +
-            partname +
-            "</h3>" +
-            "<p>" +
-            "Price: " +
-            partprice +
-            "</p>" +
-            "<p>" +
-            "Part #: " +
-            partnum +
-            "</p>" +
-            "<p>" +
-            "Phone #: " +
-            phonea +
-            "</p>"
+          partmake +
+          " " +
+          partmodel +
+          " " +
+          partname +
+          "</h3>" +
+          "<p>" +
+          "Price: " +
+          partprice +
+          "</p>" +
+          "<p>" +
+          "Part #: " +
+          partnum +
+          "</p>" +
+          "<p>" +
+          "Phone #: " +
+          phonea +
+          "</p>"
         )
         .addTo(map);
     });
 
-    
+
     // Brakes Markers
     map.on("mouseenter", "Brakes", (e) => {
       map.getCanvas().style.cursor = "pointer";
@@ -274,24 +283,24 @@ function Map() {
         .setLngLat(coordinates)
         .setHTML(
           "<h3>" +
-            partmake +
-            " " +
-            partmodel +
-            " " +
-            partname +
-            "</h3>" +
-            "<p>" +
-            "Price: " +
-            partprice +
-            "</p>" +
-            "<p>" +
-            "Part #: " +
-            partnum +
-            "</p>" +
-            "<p>" +
-            "Phone #: " +
-            phonea +
-            "</p>"
+          partmake +
+          " " +
+          partmodel +
+          " " +
+          partname +
+          "</h3>" +
+          "<p>" +
+          "Price: " +
+          partprice +
+          "</p>" +
+          "<p>" +
+          "Part #: " +
+          partnum +
+          "</p>" +
+          "<p>" +
+          "Phone #: " +
+          phonea +
+          "</p>"
         )
         .addTo(map);
     });
@@ -321,24 +330,24 @@ function Map() {
         .setLngLat(coordinates)
         .setHTML(
           "<h3>" +
-            partmake +
-            " " +
-            partmodel +
-            " " +
-            partname +
-            "</h3>" +
-            "<p>" +
-            "Price: " +
-            partprice +
-            "</p>" +
-            "<p>" +
-            "Part #: " +
-            partnum +
-            "</p>" +
-            "<p>" +
-            "Phone #: " +
-            phonea +
-            "</p>"
+          partmake +
+          " " +
+          partmodel +
+          " " +
+          partname +
+          "</h3>" +
+          "<p>" +
+          "Price: " +
+          partprice +
+          "</p>" +
+          "<p>" +
+          "Part #: " +
+          partnum +
+          "</p>" +
+          "<p>" +
+          "Phone #: " +
+          phonea +
+          "</p>"
         )
         .addTo(map);
     });
@@ -396,7 +405,7 @@ function Map() {
       </div> */}
       <div ref={mapContainer} className="map-container" />
       <nav id="menu"></nav>
-      
+
     </div>
   );
 }
